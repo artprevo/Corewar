@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.h                                          :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 17:28:39 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/13 17:28:40 by artprevo         ###   ########.fr       */
+/*   Created: 2018/11/09 14:55:45 by artprevo          #+#    #+#             */
+/*   Updated: 2018/11/22 14:18:46 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COREWAR_H
-# define COREWAR_H
+#include "libft.h"
 
-# include "libft.h"
-# include "op.h"
-
-# define BUFFER_SIZE	10000
-# define SHIFT_MIN		32
-# define TRUE			1
-# define FALSE 			0
-# define SUCCESS 		0
-# define FAILURE 		-1
-
-typedef struct			t_env
+int			ft_stristr(const char *haystack, const char *needle, size_t len)
 {
+	size_t i;
+	size_t j;
 
+	i = 0;
+	j = 0;
+	if (ft_strlen(needle) == 0)
+		return (0);
+	while (haystack[i])
+	{
+		while (needle[j] == haystack[i + j] && (i + j) < len)
+		{
+			if (j == (ft_strlen(needle) - 1))
+				return (i + j + 1);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (0);
 }
-
-// op.c
-int		get_op(t_env *env, char *line);
-
-#endif

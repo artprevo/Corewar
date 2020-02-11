@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "asm.h"
 
 static int			processparsing(t_env *env)
 {
@@ -19,16 +19,34 @@ static int			processparsing(t_env *env)
 	line = NULL;
 	while (get_next_line(0, &line) == TRUE)
 	{
-		if (get_op(env, line) == FAILURE)
+		if (fetch_champ(env, line) == FAILURE)
 			return (FAILURE);
+		if (fetch_actions(env, line) == FAILURE)
+			return (FAILURE);
+		if (env->champion->comment)
+			env->champion_fetched = TRUE;
 		free(line);
 	}
 	return (SUCCESS);
 }
 
-int		main(int ac, char **av)
+int		main(void)
 {
-	int a = ac;
-	processparsing(env);
+	t_env		*env;
+
+	if (!(env = init_env()))
+		ft_putstr("Error Malloc\n");
+	if (env)
+	{
+		if (processparsing(env) == FAILURE)
+			ft_putstr("Error Parsing\n");
+		else
+		{
+			printf("name champ = %s\n", env->champion->name);
+			printf("comment champ = %s\n", env->champion->comment);
+			// print_action(env);
+			print_op(env);
+		}
+	}
 	return (0);
 }

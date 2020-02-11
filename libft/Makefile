@@ -78,7 +78,8 @@ SRC = ft_strjoinf.c				\
 	ft_is_prime.c				\
 	ft_recursive_factorial.c	\
 	ft_recursive_power.c		\
-	ft_sqrt.c
+	ft_sqrt.c					\
+	ft_stristr.c
 
 OBJS = $(SRC:.c=.o)
 

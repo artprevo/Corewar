@@ -1,0 +1,60 @@
+#include "asm.h"
+
+static int     action_name(t_action *action, char *line)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*tmp;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (line[i] != LABEL_CHAR)
+		i++;
+	i--;
+	while (i >= 0 && strchr(LABEL_CHARS, line[i]) != 0 && i >= 0)
+	{
+		i--;
+		len++;
+	}
+	if (!(tmp = ft_strnew(len + 1)))
+		return (FAILURE);
+	while (line[++i] != LABEL_CHAR)
+		tmp[j++] = line[i];
+	tmp[j] = '\0';
+	action->name = tmp;
+	return (SUCCESS);
+}
+
+int     is_label(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == LABEL_CHAR && i != 0)
+		{
+			if (strchr(LABEL_CHARS, line[i - 1]) != 0)
+				return (TRUE);
+		}
+		i++;
+	}
+	return (FALSE);
+}
+
+int     fetch_label(t_env *env, char *line)
+{
+	t_action    *action;
+
+	if (is_label(line) == TRUE)
+	{
+		if (!(action = init_action()))
+			return (FAILURE);
+		if (action_name(action, line) == FAILURE)
+			return (FAILURE);
+		add_action(env, action);
+	}
+	return (SUCCESS);
+}

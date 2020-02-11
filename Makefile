@@ -10,22 +10,24 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = corewar
+NAME = asm
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
-SRCS = main.c
+CFLAGS =  -fsanitize=address
+SRCS = main.c exit.c print.c \
+fetch_actions.c fetch_label.c fetch_champ.c fetch_op.c fetch_param_tools.c \
+struct_add.c struct_init.c
 
 OBJS_PATH = objs/
 SRCS_PATH = srcs/
 OBJS = $(patsubst %.c, $(OBJS_PATH)%.o, $(SRCS))
 LIBFT = libft/libft.a
-HEADER = ./includes/corewar.h ./libft/libft.h
+HEADER = ./includes/asm.h ./libft/libft.h
 INCLUDES = -I ./includes/ -I ./libft/
 
 all: $(LIBFT) $(OBJS_PATH) $(NAME)
 
 $(NAME): $(OBJS)
-	printf "\033[0;36m> Compiling corewar\033[0m"
+	printf "\033[0;36m> Compiling asm\033[0m"
 	$(CC) $(CFLAGS) $(INCLUDES) -Llibft/ -lft $^ -o $@
 	printf "\033[0;32m OK\n\033[0m"
 
