@@ -73,15 +73,6 @@ typedef struct			header_s
 	char				comment[COMMENT_LENGTH + 1];
 }						header_t;
 
-typedef struct			s_param
-{
-	char				*label;
-	int					arg_type;
-	int					arg_value;
-	struct s_param		*prev;
-	struct s_param		*next;
-}						t_param;
-
 typedef struct			s_op
 {
 	char				*op;

@@ -23,16 +23,20 @@
 # define SUCCESS 		0
 # define FAILURE 		-1
 
+extern t_op				g_op_tab[17];
+
 typedef struct			s_env
 {
 	struct s_champion	*champion;
 	struct s_action		*action;
 	int					champion_fetched;
+	int					prog_size;
 }						t_env;
 
 typedef struct			s_action
 {
 	char				*name;
+	int					weight;
 	struct s_op			*op;
 	struct s_action		*next;
 	struct s_action		*prev;
@@ -40,9 +44,19 @@ typedef struct			s_action
 
 typedef struct			s_champion
 {
+	int					fd;
 	char				*name;
 	char				*comment;
 }						t_champion;
+
+typedef struct			s_param
+{
+	char				*label;
+	int					arg_type;
+	int					arg_value;
+	struct s_param		*prev;
+	struct s_param		*next;
+}						t_param;
 
 // fetch_champ.c
 int						fetch_champ(t_env *env, char *line);
@@ -55,13 +69,19 @@ int						fetch_label(t_env *env, char *line);
 int						is_label(char *line);
 
 // fetch_param.c
+int						fetch_param(t_env *env, char *line, t_op *op, int op_type);
+int						fill_reg(char *line, t_param *param, int j);
 int						label_name(char *line, t_param *param, int i);
+
+// fetch_param_tools.c
+int						fetch_indirect(char *line, t_param *param, int j, int *i);
+int						fetch_directchar(char *line, t_param *param, int j);
 
 // fetch_op.c
 int						fetch_op(t_env *env, char *line);
 
-// exit.c
-void    				ft_exit(char *str);
+// process_ocp.cs
+int						process_ocp(t_env *env);
 
 // struct_init.c
 t_env					*init_env(void);

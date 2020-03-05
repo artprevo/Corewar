@@ -13,7 +13,7 @@ static int     action_name(t_action *action, char *line)
 	while (line[i] != LABEL_CHAR)
 		i++;
 	i--;
-	while (i >= 0 && strchr(LABEL_CHARS, line[i]) != 0 && i >= 0)
+	while (i >= 0 && ft_strchr(LABEL_CHARS, line[i]) != 0 && i >= 0)
 	{
 		i--;
 		len++;
@@ -24,10 +24,11 @@ static int     action_name(t_action *action, char *line)
 		tmp[j++] = line[i];
 	tmp[j] = '\0';
 	action->name = tmp;
+	printf("action name = %s\n", tmp);
 	return (SUCCESS);
 }
 
-int     is_label(char *line)
+int			is_label(char *line)
 {
 	int i;
 
@@ -36,7 +37,7 @@ int     is_label(char *line)
 	{
 		if (line[i] == LABEL_CHAR && i != 0)
 		{
-			if (strchr(LABEL_CHARS, line[i - 1]) != 0)
+			if (ft_strchr(LABEL_CHARS, line[i - 1]) != 0)
 				return (TRUE);
 		}
 		i++;

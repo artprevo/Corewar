@@ -1,27 +1,53 @@
 #include "asm.h"
 
-int		label_name(char *line, t_param *param, int i)
+int			fetch_directchar(char *line, t_param *param, int j)
 {
-	int		len;
-	int		j;
-	char	*tmp;
-
-	len = 0;
-	j = 0;
-	if (!(line[i]))
-		return (FAILURE);
-	while (line[i] && strchr(LABEL_CHARS, line[i]) != 0)
+	if (line[j + 1] && line[j + 1] == LABEL_CHAR)
 	{
-		len++;
-		i++;
+		param->arg_type = T_LAB;
+		if (label_name(line, param, j + 2) == FAILURE)
+			return (FAILURE);
 	}
-	if (!(tmp = ft_strnew(len + 1)))
-		return (FAILURE);
-	i = i - len;
-	while (line[i] && strchr(LABEL_CHARS, line[i]) != 0)
-		tmp[j++] = line[i++];
-	tmp[j] = '\0';
-	param->label = tmp;
-	printf("param->label = %s\n", tmp);
+	else
+	{
+		param->arg_type = T_DIR;
+		if (fill_reg(line, param, j) == FAILURE)
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+int			fetch_indirect(char *line, t_param *param, int j, int *i)
+{
+	if (line[j] == ',' && *i == 0)
+	{
+		j--;
+		param->arg_type = T_IND;
+		while (ft_isdigit(line[j]) == 1)
+			j--;
+		if (fill_reg(line, param, j) == FAILURE)
+			return (FAILURE);
+		*i += 1;
+		return (TRUE);
+	}
+	if (line[j] == ',')
+	{
+		while (line[j])
+		{
+			if (line[j] == 'r' || line[j] == DIRECT_CHAR)
+				return (SUCCESS);
+			if (ft_isdigit(line[j]) == 1)
+			{
+				j--;
+				break ;
+			}
+			j++;
+		}
+		param->arg_type = T_IND;
+		if (fill_reg(line, param, j + 1) == FAILURE)
+			return (FAILURE);
+		*i += 1;
+		return (TRUE);
+	}
 	return (SUCCESS);
 }

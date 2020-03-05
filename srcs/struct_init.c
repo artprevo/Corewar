@@ -9,6 +9,7 @@ t_env       *init_env(void)
     env->champion = NULL;
     env->action = NULL;
 	env->champion_fetched = FALSE;
+	env->prog_size = 0;
     return (env);
 }
 
@@ -18,6 +19,7 @@ t_champion  *init_champion(void)
 
     if (!(champion = (t_champion *)malloc(sizeof(t_champion))))
         return (NULL);
+	champion->fd = 0;
     champion->name = NULL;
     champion->comment = NULL;
     return (champion);
@@ -33,6 +35,7 @@ t_action    *init_action(void)
     action->next = NULL;
 	action->prev = NULL;
     action->op = NULL;
+	action->weight = 0;
     return (action);
 }
 

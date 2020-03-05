@@ -39,6 +39,7 @@ typedef	struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+void				ft_perror(char *error);
 char				*ft_strjoinf(char *s1, char *s2);
 int					get_next_line(const int fd, char **line);
 size_t				ft_strlen(const char *s);
@@ -113,5 +114,6 @@ int					ft_find_next_prime(int nb);
 int					ft_recursive_factorial(int nb);
 int					ft_recursive_power(int nb, int power);
 int					ft_sqrt(int nb);
+char				*ft_strjoinf_l(char *s1, char *s2);
 
 #endif
