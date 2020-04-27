@@ -31,7 +31,7 @@ static int	ocp_calcul(t_op *op)
 		op->ocp *= 4;
 		nb_param++;
 	}
-	printf("ocp = %d\n", op->ocp);
+	// printf("ocp = %d\n", op->ocp);
 	return (SUCCESS);
 }
 

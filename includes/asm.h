@@ -99,4 +99,7 @@ void					add_param(t_op *op, t_param *param);
 void 					print_action(t_env *env);
 void 					print_op(t_env *env);
 
+// write_header.c
+int						write_header(t_env *env);
+
 #endif

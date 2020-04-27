@@ -16,7 +16,7 @@ CFLAGS =  -fsanitize=address
 SRCS = main.c print.c \
 fetch_label.c fetch_champ.c fetch_actions_op.c fetch_param.c fetch_param_tools.c \
 struct_add.c struct_init.c \
-process_ocp.c
+process_ocp.c write_header.c
 
 OBJS_PATH = objs/
 SRCS_PATH = srcs/

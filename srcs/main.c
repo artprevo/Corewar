@@ -43,12 +43,15 @@ static int			process_calcul(t_env *env)
 {
 	t_action	*action;
 
-	action = env->action;
-	while (action->prev)
-		action = action->prev;
-	env->action = action;
-	if (process_ocp(env) == FAILURE)
-		return (FAILURE);
+	if (env->action)
+	{
+		action = env->action;
+		while (action->prev)
+			action = action->prev;
+		env->action = action;
+		if (process_ocp(env) == FAILURE)
+			return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
@@ -77,19 +80,20 @@ static int			processing(t_env *env, char *file)
 	champ = init_champion();
 	env->champion = champ;
 	if ((champ->fd = open(file, O_RDONLY)) == -1)
-		ft_perror("Error: open failed");
+		return (FAILURE);
 	if (processparsing(env) == FAILURE)
-		ft_perror("Error: parsing failed");
+		return (FAILURE);
 	if (close(champ->fd) == -1)
-		ft_perror("Error: close failed");
-	if ((champ->fd = open(ft_strjoinf_l(env->champion->name, ".cor"), O_CREAT |
+		return (FAILURE);
+	if ((champ->fd = open(ft_strjoinf_l(ft_strdup(env->champion->name), ".cor"), O_CREAT |
 		O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR)) == -1)
-		ft_perror("Error: open failed");
+		return (FAILURE);
 	if (process_calcul(env) == FAILURE)
 		return (FAILURE);
-	// write_binary(champ);
+	if (write_header(env) == FAILURE)
+		return (FAILURE);
 	if (close(champ->fd) == -1)
-		ft_perror("Error: close failed");
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -103,12 +107,12 @@ int		main(int ac, char **av)
 	{
 		if (processing(env, av[1]) == FAILURE)
 			ft_perror("Ui ca c mal passe");
-		else
-		{
-			// printf("name champ = %s\n", env->champion->name);
-			// printf("comment champ = %s\n", env->champion->comment);
-			// print_op(env);
-		}
+		// else
+		// {
+		// 	// printf("name champ = %s\n", env->champion->name);
+		// 	// printf("comment champ = %s\n", env->champion->comment);
+		// 	// print_op(env);
+		// }
 	}
 	return (0);
 }
