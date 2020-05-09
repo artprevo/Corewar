@@ -1,6 +1,6 @@
 #include "asm.h"
 
-static int     action_name(t_action *action, char *line)
+static void     action_name(t_action *action, char *line)
 {
 	int		i;
 	int		j;
@@ -19,13 +19,11 @@ static int     action_name(t_action *action, char *line)
 		len++;
 	}
 	if (!(tmp = ft_strnew(len + 1)))
-		return (FAILURE);
+		ft_error(action->env, "Error on malloc for action name");
 	while (line[++i] != LABEL_CHAR)
 		tmp[j++] = line[i];
 	tmp[j] = '\0';
 	action->name = tmp;
-	printf("action name = %s\n", tmp);
-	return (SUCCESS);
 }
 
 int			is_label(char *line)
@@ -51,11 +49,11 @@ int     fetch_label(t_env *env, char *line)
 
 	if (is_label(line) == TRUE)
 	{
-		if (!(action = init_action()))
-			return (FAILURE);
-		if (action_name(action, line) == FAILURE)
-			return (FAILURE);
+		if (!(action = init_action(env)))
+			ft_error(env, "Error on malloc for action");
+		action_name(action, line);
 		add_action(env, action);
+		action->id_label = env->id_label++;
 	}
 	return (SUCCESS);
 }

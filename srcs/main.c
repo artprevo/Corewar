@@ -39,7 +39,7 @@ t_op	g_op_tab[17] =
 	{0, 0, {0}, 0, 0, 0, 0, 0, 0, NULL, NULL}
 };
 
-static int			process_calcul(t_env *env)
+static void			process_calcul(t_env *env)
 {
 	t_action	*action;
 
@@ -49,10 +49,9 @@ static int			process_calcul(t_env *env)
 		while (action->prev)
 			action = action->prev;
 		env->action = action;
-		if (process_ocp(env) == FAILURE)
-			return (FAILURE);
+		process_ocp(env);
+		weight_and_size(env);
 	}
-	return (SUCCESS);
 }
 
 static int			processparsing(t_env *env)
@@ -62,12 +61,14 @@ static int			processparsing(t_env *env)
 	line = NULL;
 	while (get_next_line(env->champion->fd, &line) == TRUE)
 	{
+		env->line = line;
 		if (fetch_champ(env, line) == FAILURE)
 			return (FAILURE);
 		if (fetch_actions(env, line) == FAILURE)
 			return (FAILURE);
 		if (env->champion->comment)
 			env->champion_fetched = TRUE;
+		env->nb_line++;
 		free(line);
 	}
 	return (SUCCESS);
@@ -77,41 +78,51 @@ static int			processing(t_env *env, char *file)
 {
 	t_champion		*champ;
 
-	champ = init_champion();
+	champ = init_champion(env);
 	env->champion = champ;
 	if ((champ->fd = open(file, O_RDONLY)) == -1)
-		return (FAILURE);
+		ft_error(env, "Wrong champion file on input");
 	if (processparsing(env) == FAILURE)
-		return (FAILURE);
+		ft_error(env, "Parsing failed");
 	if (close(champ->fd) == -1)
-		return (FAILURE);
+		ft_error(env, "Error on closing champion file");
 	if ((champ->fd = open(ft_strjoinf_l(ft_strdup(env->champion->name), ".cor"), O_CREAT |
 		O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR)) == -1)
-		return (FAILURE);
-	if (process_calcul(env) == FAILURE)
-		return (FAILURE);
-	if (write_header(env) == FAILURE)
-		return (FAILURE);
+		ft_error(env, "Error on creating the .cor file");
+	process_calcul(env);
+	write_header(env);
+	write_champ(env);
 	if (close(champ->fd) == -1)
-		return (FAILURE);
+		ft_error(env, "Error on closing the new file");
 	return (SUCCESS);
 }
 
 int		main(int ac, char **av)
 {
 	t_env		*env;
+	char		*name;
 
+	if (ac != 2)
+		ft_error(env, "usage: ./asm champion.s\n");
 	if (!(env = init_env()))
-		ft_putstr("Error Malloc\n");
+		ft_putstr("Error on malloc\n");
 	if (env)
 	{
+		env->file_name = ft_strjoinf_l(ft_strdup(av[1]), ".cor");
 		if (processing(env, av[1]) == FAILURE)
-			ft_perror("Ui ca c mal passe");
+			ft_error(env, "Ui ca c mal passe.");
+		ft_putstr_fd("\033[32m", 2);
+		ft_putstr_fd("Writing output program to ", 2);
+		ft_putstr_fd(env->file_name, 2);
+		ft_putstr_fd("\n\033[0m", 2);
 		// else
 		// {
+		// 	printf("env->prog_size = %d\n", env->prog_size);
+		// 	print_action(env);
+		// }
 		// 	// printf("name champ = %s\n", env->champion->name);
 		// 	// printf("comment champ = %s\n", env->champion->comment);
-		// 	// print_op(env);
+			// print_op(env);
 		// }
 	}
 	return (0);

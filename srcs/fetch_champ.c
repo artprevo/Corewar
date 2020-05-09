@@ -34,13 +34,13 @@ int				fetch_champ(t_env *env, char *line)
 	{
 		if (ft_strnstr(line, NAME_CMD_STRING, ft_strlen(line)) != 0)
 			if (!(champion->name = name_comment(line)))
-				return (FAILURE);
+				ft_error(env, "Error in champion's name");
 	}
 	if (!champion->comment)
 	{
 		if (ft_strnstr(line, COMMENT_CMD_STRING, ft_strlen(line)) != 0)
 			if (!(champion->comment = name_comment(line)))
-				return (FAILURE);
+				ft_error(env, "Error in champion's comment");
 	}
 	return (SUCCESS);
 }

@@ -62,27 +62,28 @@ static int		fill_param(char *line, t_op *op, int j, int i)
 		if (line[j] == 'r' && ft_isalnum(line[j - 1]) == 0 && (ft_isdigit(line[j + 1]) == 1))
 		{
 			param->arg_type = T_REG;
-			if (fill_reg(line, param, j) == FAILURE)
-				return (FAILURE);
+			if (!(param->arg_type & g_op_tab[param->op_type].args[i]) ||
+			fill_reg(line, param, j) == FAILURE)
+				ft_error(param->env, "Error on register malloc");
 			param = param->next;
 			i++;
 		}
 		else if (line[j] == DIRECT_CHAR)
 		{
 			if (fetch_directchar(line, param, j) == FAILURE)
-				return (FAILURE);
+				ft_error(param->env, "Error on parameter fetch");
 			param = param->next;
 			i++;
 		}
 		if ((ret = fetch_indirect(line, param, j, &i)) == FAILURE)
-			return (FAILURE);
+			ft_error(param->env, "Error on parameter fetch");
 		if (ret == TRUE)
 			param = param->next;
 	}
 	return (SUCCESS);
 }
 
-static int		make_param(t_op *op, int nb_arg)
+static int		make_param(t_env *env, t_op *op, int nb_arg, int op_type)
 {
 	t_param		*param;
 	int			i;
@@ -90,7 +91,7 @@ static int		make_param(t_op *op, int nb_arg)
 	i = 0;
 	while (i < nb_arg)
 	{
-		if (!(param = init_param()))
+		if (!(param = init_param(op_type, env)))
 			return (FAILURE);
 		else
 			add_param(op, param);
@@ -113,10 +114,15 @@ int				fetch_param(t_env *env, char *line, t_op *op, int op_type)
 		i++;
 	}
 	if ((separator + 1) != op->nb_arg)
+	{
+		printf("nb arg = %d\n", op->nb_arg);
+		printf("last seen = separator\n");
 		return (FAILURE);
-	if (make_param(op, g_op_tab[op_type].nb_arg) == FAILURE)
-		return (FAILURE);
+	}
+	if (make_param(env, op, g_op_tab[op_type].nb_arg, op_type) == FAILURE)
+		ft_error(env, "Error on malloc");
 	if (fill_param(line, op, -1, 0) == FAILURE)
-		return (FAILURE);
+		ft_error(env, "Error on parameters fetch");
+	env->token = OP;
 	return (SUCCESS);
 }

@@ -1,6 +1,6 @@
 #include "asm.h"
 
-t_env       *init_env(void)
+t_env       *init_env()
 {
     t_env *env;
 
@@ -10,32 +10,39 @@ t_env       *init_env(void)
     env->action = NULL;
 	env->champion_fetched = FALSE;
 	env->prog_size = 0;
+	env->nb_line = 1;
+	env->line = NULL;
+	env->token = 1;
+	env->id_label = 0;
     return (env);
 }
 
-t_champion  *init_champion(void)
+t_champion  *init_champion(t_env *env)
 {
     t_champion *champion;
 
     if (!(champion = (t_champion *)malloc(sizeof(t_champion))))
         return (NULL);
+	champion->env = env;
 	champion->fd = 0;
     champion->name = NULL;
     champion->comment = NULL;
     return (champion);
 }
 
-t_action    *init_action(void)
+t_action    *init_action(t_env *env)
 {
     t_action    *action;
 
     if (!(action = (t_action *)malloc(sizeof(t_action))))
         return (NULL);
+	action->env = env;
     action->name = NULL;
     action->next = NULL;
 	action->prev = NULL;
     action->op = NULL;
 	action->weight = 0;
+	action->id_label = 0;
     return (action);
 }
 
@@ -58,15 +65,18 @@ t_op		*init_op(void)
 	return (op);
 }
 
-t_param		*init_param(void)
+t_param		*init_param(int op_type, t_env *env)
 {
 	t_param		*param;
 
 	if (!(param = (t_param *)malloc(sizeof(t_param))))
 		return (NULL);
+	param->env = env;
 	param->label = NULL;
 	param->arg_type = 0;
 	param->arg_value = 0;
+	param->op_type = op_type;
+	param->label_size = g_op_tab[op_type].label_size;
 	param->prev = NULL;
 	param->next = NULL;
 	return (param);

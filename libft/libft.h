@@ -115,5 +115,6 @@ int					ft_recursive_factorial(int nb);
 int					ft_recursive_power(int nb, int power);
 int					ft_sqrt(int nb);
 char				*ft_strjoinf_l(char *s1, char *s2);
+char				*ft_itoa_base(int value, int base);
 
 #endif

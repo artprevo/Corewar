@@ -14,7 +14,7 @@ static int	ocp_calcul(t_op *op)
 		op->ocp = 0;
 	while (param)
 	{
-		// printf("arg_type = %d || arg_value = %d\n", param->arg_type, param->arg_value);
+		// // printf("arg_type = %d || arg_value = %d\n", param->arg_type, param->arg_value);
 		if (param->arg_type == T_REG)
 			add = REG_CODE;
 		if (param->arg_type == T_DIR || param->arg_type == T_LAB)
@@ -35,7 +35,7 @@ static int	ocp_calcul(t_op *op)
 	return (SUCCESS);
 }
 
-int			process_ocp(t_env *env)
+void			process_ocp(t_env *env)
 {
 	t_action	*action;
 	t_op		*op;
@@ -46,11 +46,9 @@ int			process_ocp(t_env *env)
 		op = action->op;
 		while (op)
 		{
-			if (ocp_calcul(op) == FAILURE)
-				return (FAILURE);
+			ocp_calcul(op);
 			op = op->next;
 		}
 		action = action->next;
 	}
-	return (SUCCESS);
 }

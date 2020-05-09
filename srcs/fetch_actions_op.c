@@ -25,9 +25,10 @@ void 			clean_line(char *line)
 		i = 0;
 		while (line[i] != LABEL_CHAR)
 		{
-			line[i] = 'a';
+			line[i] = ' ';
 			i++;
 		}
+		line[i] = ' ';
 	}
 	i = 0;
 	while (line[i])
@@ -45,6 +46,34 @@ void 			clean_line(char *line)
 	}
 }
 
+static int		find_op(char *line)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	tmp = ft_strdup(line);
+	j = 0;
+	while (tmp[j])
+	{
+		if (tmp[j] == LABEL_CHAR)
+		{
+			while (tmp[j] && tmp[j] != SEPARATOR_CHAR)
+			{
+				tmp[j] = 'a';
+				j++;
+			}
+			break ;
+		}
+		j++;
+	}
+	i = 15;
+	while (i >= 0 && ft_strnstr(tmp, g_op_tab[i].op, ft_strlen(tmp)) == 0)
+		i--;
+	free(tmp);
+	return (i);
+}
+
 int				fetch_op(t_env *env, char *line)
 {
 	int		i;
@@ -52,17 +81,18 @@ int				fetch_op(t_env *env, char *line)
 
 	clean_line(line);
 	i = 15;
-	while (i >= 0 && ft_strnstr(line, g_op_tab[i].op, ft_strlen(line)) == 0)
-		i--;
+	i = find_op(line);
 	if (i >= 0)
 	{
+		if (!env->action)
+			fetch_label(env, "starting pattern:");
 		if (!(op = init_op()))
-			return (FAILURE);
+			ft_error(env, "Malloc error on OPs creation");
 		if (op_dup(op, i) == FAILURE)
-			return (FAILURE);
+			ft_error(env, "Malloc error on OPs duplication");
 		add_op(env->action, op);
 		if (fetch_param(env, line, op, i) == FAILURE)
-			return (FAILURE);
+			ft_error(env, "Error on parameter fetch");
 	}
 	return (SUCCESS);
 }
@@ -71,10 +101,11 @@ int				fetch_actions(t_env *env, char *line)
 {
 	if (env->champion_fetched == TRUE)
 	{
+		// printf("salut on est a la ligne %d\n%s\n", env->nb_line, env->line);
 		if (fetch_label(env, line) == FAILURE)
-			return (FAILURE);
+			ft_error(env, "Error on label fetch");
 		if (fetch_op(env, line) == FAILURE)
-			return (FAILURE);
+			ft_error(env, "Error on op fetch");
 	}
 	return (SUCCESS);
 }

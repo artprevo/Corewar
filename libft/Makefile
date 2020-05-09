@@ -81,7 +81,8 @@ SRC = ft_strjoinf.c				\
 	ft_sqrt.c					\
 	ft_stristr.c				\
 	ft_perror.c					\
-	ft_strjoinf_l.c
+	ft_strjoinf_l.c				\
+	ft_itoabase.c
 
 OBJS = $(SRC:.c=.o)
 

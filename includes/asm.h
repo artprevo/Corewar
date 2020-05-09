@@ -23,6 +23,9 @@
 # define SUCCESS 		0
 # define FAILURE 		-1
 
+# define OP				1
+# define PARAM			2
+
 extern t_op				g_op_tab[17];
 
 typedef struct			s_env
@@ -31,12 +34,19 @@ typedef struct			s_env
 	struct s_action		*action;
 	int					champion_fetched;
 	int					prog_size;
+	int					nb_line;
+	char				*line;
+	int					token;
+	int					id_label;
+	char				*file_name;
 }						t_env;
 
 typedef struct			s_action
 {
+	t_env				*env;
 	char				*name;
 	int					weight;
+	int					id_label;
 	struct s_op			*op;
 	struct s_action		*next;
 	struct s_action		*prev;
@@ -44,6 +54,7 @@ typedef struct			s_action
 
 typedef struct			s_champion
 {
+	t_env				*env;
 	int					fd;
 	char				*name;
 	char				*comment;
@@ -51,9 +62,12 @@ typedef struct			s_champion
 
 typedef struct			s_param
 {
+	t_env				*env;
 	char				*label;
 	int					arg_type;
 	int					arg_value;
+	int					op_type;
+	int					label_size;
 	struct s_param		*prev;
 	struct s_param		*next;
 }						t_param;
@@ -81,14 +95,14 @@ int						fetch_directchar(char *line, t_param *param, int j);
 int						fetch_op(t_env *env, char *line);
 
 // process_ocp.cs
-int						process_ocp(t_env *env);
+void					process_ocp(t_env *env);
 
 // struct_init.c
-t_env					*init_env(void);
-t_champion				*init_champion(void);
-t_action				*init_action(void);
+t_env					*init_env();
+t_champion				*init_champion(t_env *env);
+t_action				*init_action(t_env *env);
 t_op					*init_op(void);
-t_param					*init_param(void);
+t_param					*init_param(int op_type, t_env *env);
 
 // struct_add.c
 void					add_action(t_env *env, t_action *action);
@@ -100,6 +114,19 @@ void 					print_action(t_env *env);
 void 					print_op(t_env *env);
 
 // write_header.c
-int						write_header(t_env *env);
+void					write_header(t_env *env);
+
+// write_champ.c
+void					write_champ(t_env *env);
+
+// ft_error.c
+void					ft_error(t_env *env, char *str);
+
+// write_tools.c
+int						get_id_label(t_action *action, char *arg);
+int						get_value(t_action *action, int id_label);
+
+// weight_and_size.c
+void					weight_and_size(t_env *env);
 
 #endif
