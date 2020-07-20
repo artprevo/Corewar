@@ -86,7 +86,7 @@ static int			processing(t_env *env, char *file)
 		ft_error(env, "Parsing failed");
 	if (close(champ->fd) == -1)
 		ft_error(env, "Error on closing champion file");
-	if ((champ->fd = open(ft_strjoinf_l(ft_strdup(env->champion->name), ".cor"), O_CREAT |
+	if ((champ->fd = open(ft_strdup(env->file_name), O_CREAT |
 		O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR)) == -1)
 		ft_error(env, "Error on creating the .cor file");
 	process_calcul(env);
@@ -108,7 +108,7 @@ int		main(int ac, char **av)
 		ft_putstr("Error on malloc\n");
 	if (env)
 	{
-		env->file_name = ft_strjoinf_l(ft_strdup(av[1]), ".cor");
+		env->file_name = ft_strjoinf_l(file_name(av[1]), ".cor");
 		if (processing(env, av[1]) == FAILURE)
 			ft_error(env, "Ui ca c mal passe.");
 		ft_putstr_fd("\033[32m", 2);

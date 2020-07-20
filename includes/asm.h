@@ -129,4 +129,7 @@ int						get_value(t_action *action, int id_label);
 // weight_and_size.c
 void					weight_and_size(t_env *env);
 
+// tools.c
+char    				*file_name(char *str);
+
 #endif

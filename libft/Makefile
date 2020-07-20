@@ -12,7 +12,7 @@
 
 
 NAME = libft.a
-FLAGS = -Wall -Wextra -Werror
+FLAGS = 
 SRC = ft_strjoinf.c				\
 	get_next_line.c				\
 	ft_memccpy.c    			\
@@ -95,7 +95,7 @@ $(NAME): $(OBJS)
 
 
 $(OBJS): %.o: %.c
-	gcc $(FLAGS) -c $< -I libft.h -o $@
+	gcc $(FLAGS) -c $< -I /libft.h -o $@
 
 clean:
 	rm -f $(OBJS)

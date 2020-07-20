@@ -15,4 +15,4 @@
 ./asm resources/champs/slider2.s
 ./asm resources/champs/survivor.s
 ./asm resources/champs/toto.s
-# rm *.cor
+rm *.cor

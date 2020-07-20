@@ -11,12 +11,12 @@
 # **************************************************************************** #
 
 NAME = asm
-CC = clang
-CFLAGS =  -fsanitize=address
+CC = gcc
+CFLAGS = 
 SRCS = main.c print.c \
 fetch_label.c fetch_champ.c fetch_actions_op.c fetch_param.c fetch_param_tools.c \
 struct_add.c struct_init.c ft_error.c weight_and_size.c \
-process_ocp.c write_header.c write_champ.c write_tools.c
+process_ocp.c write_header.c write_champ.c write_tools.c tools.c
 
 OBJS_PATH = objs/
 SRCS_PATH = srcs/
@@ -27,7 +27,7 @@ INCLUDES = -I ./includes/ -I ./libft/
 
 all: $(LIBFT) $(OBJS_PATH) $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT)
 	printf "\033[0;36m> Compiling asm\033[0m"
 	$(CC) $(CFLAGS) $(INCLUDES) -Llibft/ -lft $^ -o $@
 	printf "\033[0;32m OK\n\033[0m"
