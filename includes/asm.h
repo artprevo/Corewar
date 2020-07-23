@@ -23,8 +23,8 @@
 # define SUCCESS 		0
 # define FAILURE 		-1
 
-# define OP				1
-# define PARAM			2
+# define DEFAULT		1
+# define NEW_ACTION		2
 
 extern t_op				g_op_tab[17];
 
@@ -45,7 +45,6 @@ typedef struct			s_action
 {
 	t_env				*env;
 	char				*name;
-	int					weight;
 	int					id_label;
 	struct s_op			*op;
 	struct s_action		*next;
@@ -123,13 +122,16 @@ void					write_champ(t_env *env);
 void					ft_error(t_env *env, char *str);
 
 // write_tools.c
-int						get_id_label(t_action *action, char *arg);
-int						get_value(t_action *action, int id_label);
+int						get_id_label(t_env *env, t_op *op, char *arg);
+int						get_value(t_env *env, t_op *op, int id_label);
 
 // weight_and_size.c
 void					weight_and_size(t_env *env);
 
 // tools.c
 char    				*file_name(char *str);
+int     				line_empty(t_env *env, char *line);
+void    				empty_action(t_env *env);
+void    				id_op(t_env *env);
 
 #endif

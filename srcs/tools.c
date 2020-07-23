@@ -36,3 +36,55 @@ char    *file_name(char *str)
         file_name[j++] = str[k++];
     return(file_name);
 }
+
+int     line_empty(t_env *env, char *line)
+{
+    int i;
+
+    i = 0;
+    if (env->action)
+    {
+        if (ft_strcmp(env->action->name, "pattern") == 0)
+            return (FALSE);
+    }
+    while (line[i])
+    {
+        if (line[i] != ' ' && line[i] != '\n')
+            return (FALSE);
+        i++;
+    }
+    return (TRUE);
+}
+
+void    empty_action(t_env *env)
+{
+    t_action    *action;
+
+    action = env->action;
+    while (action)
+    {
+        if (!action->op)
+            action->op = init_op();
+        action = action->next;
+    }
+}
+
+void    id_op(t_env *env)
+{
+    int id;
+    t_action    *action;
+    t_op        *op;
+
+    id = 0;
+    action = env->action;
+    while (action)
+    {
+        op = action->op;
+        while (op)
+        {
+            op->id_label = id++;
+            op = op->next;
+        }
+        action = action->next;
+    }
+}

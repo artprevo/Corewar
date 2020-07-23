@@ -54,6 +54,7 @@ int     fetch_label(t_env *env, char *line)
 		action_name(action, line);
 		add_action(env, action);
 		action->id_label = env->id_label++;
+		env->token = DEFAULT;
 	}
 	return (SUCCESS);
 }

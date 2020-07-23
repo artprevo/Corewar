@@ -84,8 +84,8 @@ int				fetch_op(t_env *env, char *line)
 	i = find_op(line);
 	if (i >= 0)
 	{
-		if (!env->action)
-			fetch_label(env, "starting pattern:");
+		if (!env->action || ft_strcmp(env->action->name, "pattern") == 0 || env->token == NEW_ACTION)
+			fetch_label(env, "pattern:");
 		if (!(op = init_op()))
 			ft_error(env, "Malloc error on OPs creation");
 		if (op_dup(op, i) == FAILURE)
@@ -102,6 +102,8 @@ int				fetch_actions(t_env *env, char *line)
 	if (env->champion_fetched == TRUE)
 	{
 		// printf("salut on est a la ligne %d\n%s\n", env->nb_line, env->line);
+		if (line_empty(env, line) == TRUE)
+			env->token = NEW_ACTION;
 		if (fetch_label(env, line) == FAILURE)
 			ft_error(env, "Error on label fetch");
 		if (fetch_op(env, line) == FAILURE)

@@ -3,12 +3,21 @@
 void 	print_action(t_env *env)
 {
 	t_action	*action;
+	t_op		*op;
 
 	action = env->action;
 	while (action)
 	{
-		printf("action->name = %s\n", action->name);
-		printf("action->weight = %d\n", action->weight);
+		op = action->op;
+				printf("action->name = %s\n", action->name);
+		printf("id action = %d\n", action->id_label);
+		while (op)
+		{
+			printf("op = %s\n", op->op);
+			printf("op label = %d\n", op->id_label);
+			op = op->next;
+		}
+
 		action = action->next;
 	}
 }

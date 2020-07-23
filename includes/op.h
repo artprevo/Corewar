@@ -84,6 +84,8 @@ typedef struct			s_op
 	int					ocp;
 	int					carry;
 	int					label_size;
+	int					weight;
+	int					id_label;
 	struct s_op			*next;
 	struct s_param		*param;
 }						t_op;

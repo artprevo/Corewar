@@ -33,20 +33,27 @@ int				fill_reg(char *line, t_param *param, int j)
 
 	i = 0;
 	len = 0;
+	// printf("line = %s\n", line);
 	while (line[j] && line[j] != SEPARATOR_CHAR)
 	{
 		len++;
 		j++;
 	}
+	// printf("on s'arrête à %c\n", line[j]);
 	if (param->arg_type == T_IND)
 		len++;
 	if (!(tmp = ft_strnew(len)))
 		return (FAILURE);
 	j = j - len + 1;
+	if (param->arg_type == T_IND && line[j - 1] == '-')
+		j--;
+	// printf("on reprend à %c\n", line[j]);
 	while (line[j] && line[j] != SEPARATOR_CHAR)
 			tmp[i++] = line[j++];
 	tmp[i] = '\0';
+	// printf("tmp = %s\n", tmp);
 	param->arg_value = ft_atoi(tmp);
+	// printf("arg value = %d\n", param->arg_value);
 	free(tmp);
 	return (SUCCESS);
 }
@@ -123,6 +130,5 @@ int				fetch_param(t_env *env, char *line, t_op *op, int op_type)
 		ft_error(env, "Error on malloc");
 	if (fill_param(line, op, -1, 0) == FAILURE)
 		ft_error(env, "Error on parameters fetch");
-	env->token = OP;
 	return (SUCCESS);
 }

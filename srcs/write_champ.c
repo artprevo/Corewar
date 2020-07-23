@@ -17,15 +17,18 @@ static void	write_value(char *prog, int value, int size)
 	}
 }
 
-static void	write_label(char *prog, t_action *action, t_param *param, int dir)
+static void	write_label(char *prog, t_op *op, t_param *param, int dir)
 {
 	int				value;
 	int				id_label;
 	char			*arg;
 
 	arg = param->label;
-	id_label = get_id_label(action, arg);
-	value = get_value(action, id_label);
+	value = 0;
+	id_label = get_id_label(op->param->env, op, arg);
+	if (id_label != op->id_label)
+		value = get_value(op->param->env, op, id_label);
+	// printf("\033[0;36mvalue = %d\n\033[0m", value);
 	if (dir && param->label_size == 4)
 	{
 		prog[3] = value & 0xff;
@@ -59,7 +62,7 @@ static void	write_args(t_action *action, t_op *op, char *prog, int *i)
 		{
 			dir = (param->arg_type == T_DIR || param->arg_type == T_LAB) ? 1 : 0;
 			if (param->label != NULL)
-				write_label(&(prog[*i]), action, param, dir);
+				write_label(&(prog[*i]), op, param, dir);
 			else
 				write_value(&(prog[*i]), param->arg_value, op->label_size * dir);
 			*i += (dir) ? op->label_size : 2;
@@ -80,17 +83,22 @@ void	write_champ(t_env *env)
 		ft_error(env, "Error on malloc");
 	i = 0;
 	action = env->action;
+	// print_action(env);
+
 	while (action)
 	{
 		// printf("ACTION NAME = %s || ACTION WEIGHT = %d\n", action->name, action->weight);
 		op = action->op;
 		while (op)
 		{
+			if (op->op)
+			{
 			// printf("OP = %s\n", op->op);
 			prog[i++] = op->opcode;
 			if (op->ocp)
 				prog[i++] = op->ocp;
 			write_args(action, op, prog, &i);
+			}
 			op = op->next;
 			// printf("UNE ACTION ECRITE\n");
 		}

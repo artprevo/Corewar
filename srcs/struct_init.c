@@ -41,7 +41,6 @@ t_action    *init_action(t_env *env)
     action->next = NULL;
 	action->prev = NULL;
     action->op = NULL;
-	action->weight = 0;
 	action->id_label = 0;
     return (action);
 }
@@ -60,6 +59,7 @@ t_op		*init_op(void)
 	op->ocp = 0;
 	op->carry = 0;
 	op->label_size = 0;
+	op->op = 0;
 	op->next = NULL;
 	op->param = NULL;
 	return (op);
