@@ -18,7 +18,7 @@ char	*ft_strjoinf_l(char *s1, char *s2)
 	int			i;
 	int			j;
 
-	if (!(stack = ft_memalloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
+	if (!s1 || !s2 || !(stack = ft_memalloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
 		return (NULL);
 	i = -1;
 	j = -1;

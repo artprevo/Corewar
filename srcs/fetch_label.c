@@ -1,6 +1,6 @@
 #include "asm.h"
 
-static void     action_name(t_action *action, char *line)
+static void		action_name(t_action *action, char *line)
 {
 	int		i;
 	int		j;
@@ -26,7 +26,7 @@ static void     action_name(t_action *action, char *line)
 	action->name = tmp;
 }
 
-int			is_label(char *line)
+int				is_label(char *line)
 {
 	int i;
 
@@ -43,9 +43,9 @@ int			is_label(char *line)
 	return (FALSE);
 }
 
-int     fetch_label(t_env *env, char *line)
+int				fetch_label(t_env *env, char *line)
 {
-	t_action    *action;
+	t_action	*action;
 
 	if (is_label(line) == TRUE)
 	{

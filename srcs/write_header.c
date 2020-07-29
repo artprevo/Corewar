@@ -4,7 +4,6 @@ static void		write_prog_size(t_env *env, t_champion *champ)
 {
 	char	*prog_size;
 
-	// printf("PROG_SIZE = %d\n", env->prog_size);
 	if (!(prog_size = ft_memalloc(4)))
 		ft_error(champ->env, "Error on malloc");
 	prog_size[3] = env->prog_size & 0xff;

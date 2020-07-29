@@ -22,12 +22,12 @@ char			*name_comment(char *line)
 	while (line[++i] != '"')
 		tmp[j++] = line[i];
 	tmp[j] = '\0';
-		return (tmp);
+	return (tmp);
 }
 
 int				fetch_champ(t_env *env, char *line)
 {
-	t_champion  *champion;
+	t_champion	*champion;
 
 	champion = env->champion;
 	if (!champion->name)

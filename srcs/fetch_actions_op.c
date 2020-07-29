@@ -16,7 +16,7 @@ static int		op_dup(t_op *op, int op_type)
 	return (SUCCESS);
 }
 
-void 			clean_line(char *line)
+void			clean_line(char *line)
 {
 	int i;
 
@@ -24,10 +24,7 @@ void 			clean_line(char *line)
 	{
 		i = 0;
 		while (line[i] != LABEL_CHAR)
-		{
-			line[i] = ' ';
-			i++;
-		}
+			line[i++] = ' ';
 		line[i] = ' ';
 	}
 	i = 0;
@@ -36,10 +33,7 @@ void 			clean_line(char *line)
 		if (line[i] == COMMENT_CHAR)
 		{
 			while (line[i])
-			{
-				line[i] = ' ';
-				i++;
-			}
+				line[i++] = ' ';
 			break ;
 		}
 		i++;
@@ -84,7 +78,8 @@ int				fetch_op(t_env *env, char *line)
 	i = find_op(line);
 	if (i >= 0)
 	{
-		if (!env->action || ft_strcmp(env->action->name, "pattern") == 0 || env->token == NEW_ACTION)
+		if (!env->action || ft_strcmp(env->action->name, "pattern") == 0
+		|| env->token == NEW_ACTION)
 			fetch_label(env, "pattern:");
 		if (!(op = init_op()))
 			ft_error(env, "Malloc error on OPs creation");
@@ -101,7 +96,6 @@ int				fetch_actions(t_env *env, char *line)
 {
 	if (env->champion_fetched == TRUE)
 	{
-		// printf("salut on est a la ligne %d\n%s\n", env->nb_line, env->line);
 		if (line_empty(env, line) == TRUE)
 			env->token = NEW_ACTION;
 		if (fetch_label(env, line) == FAILURE)

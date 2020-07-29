@@ -6,7 +6,17 @@ static void	update_weight(t_env *env, t_op *op, int add)
 	op->weight += add;
 }
 
-void	weight_and_size(t_env *env)
+static void	weight_calcul(t_env *env, t_param *param, t_op *op)
+{
+	if (param->arg_type == T_REG)
+		update_weight(env, op, 1);
+	if (param->arg_type == T_DIR || param->arg_type == T_LAB)
+		update_weight(env, op, op->label_size);
+	if (param->arg_type == T_IND)
+		update_weight(env, op, 2);
+}
+
+void		weight_and_size(t_env *env)
 {
 	t_action	*action;
 	t_op		*op;
@@ -22,12 +32,7 @@ void	weight_and_size(t_env *env)
 			param = op->param;
 			while (param)
 			{
-				if (param->arg_type == T_REG)
-					update_weight(env, op, 1);
-				if (param->arg_type == T_DIR || param->arg_type == T_LAB)
-					update_weight(env, op, op->label_size);
-				if (param->arg_type == T_IND)
-					update_weight(env, op, 2);
+				weight_calcul(env, param, op);
 				param = param->next;
 			}
 			op = op->next;

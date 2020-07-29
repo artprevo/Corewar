@@ -33,13 +33,11 @@ int				fill_reg(char *line, t_param *param, int j)
 
 	i = 0;
 	len = 0;
-	// printf("line = %s\n", line);
 	while (line[j] && line[j] != SEPARATOR_CHAR)
 	{
 		len++;
 		j++;
 	}
-	// printf("on s'arrête à %c\n", line[j]);
 	if (param->arg_type == T_IND)
 		len++;
 	if (!(tmp = ft_strnew(len)))
@@ -47,13 +45,10 @@ int				fill_reg(char *line, t_param *param, int j)
 	j = j - len + 1;
 	if (param->arg_type == T_IND && line[j - 1] == '-')
 		j--;
-	// printf("on reprend à %c\n", line[j]);
 	while (line[j] && line[j] != SEPARATOR_CHAR)
-			tmp[i++] = line[j++];
+		tmp[i++] = line[j++];
 	tmp[i] = '\0';
-	// printf("tmp = %s\n", tmp);
 	param->arg_value = ft_atoi(tmp);
-	// printf("arg value = %d\n", param->arg_value);
 	free(tmp);
 	return (SUCCESS);
 }
@@ -66,12 +61,10 @@ static int		fill_param(char *line, t_op *op, int j, int i)
 	param = op->param;
 	while (line[++j] && line[j] != COMMENT_CHAR)
 	{
-		if (line[j] == 'r' && ft_isalnum(line[j - 1]) == 0 && (ft_isdigit(line[j + 1]) == 1))
+		if (line[j] == 'r' && ft_isalnum(line[j - 1]) == 0 &&
+		(ft_isdigit(line[j + 1]) == 1))
 		{
-			param->arg_type = T_REG;
-			if (!(param->arg_type & g_op_tab[param->op_type].args[i]) ||
-			fill_reg(line, param, j) == FAILURE)
-				ft_error(param->env, "Error on register malloc");
+			param_reg(param, i, j, line);
 			param = param->next;
 			i++;
 		}
@@ -87,7 +80,6 @@ static int		fill_param(char *line, t_op *op, int j, int i)
 		if (ret == TRUE)
 			param = param->next;
 	}
-	return (SUCCESS);
 }
 
 static int		make_param(t_env *env, t_op *op, int nb_arg, int op_type)
