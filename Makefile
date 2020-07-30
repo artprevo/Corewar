@@ -12,11 +12,11 @@
 
 NAME = asm
 CC = gcc
-CFLAGS = 
+CFLAGS = -fsanitize=address -Wall -Wextra -Werror
 SRCS = main.c print.c \
 fetch_label.c fetch_champ.c fetch_actions_op.c fetch_param.c fetch_param_tools.c \
-struct_add.c struct_init.c ft_error.c weight_and_size.c \
-process_ocp.c write_header.c write_champ.c write_tools.c tools.c
+struct_add.c struct_init.c ft_error.c weight_and_size.c gnl_reworked.c tools2.c \
+process_ocp.c write_header.c write_champ.c write_tools.c tools.c freeall.c \
 
 OBJS_PATH = objs/
 SRCS_PATH = srcs/

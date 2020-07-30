@@ -62,26 +62,27 @@ static void			process_calcul(t_env *env)
 static int			processparsing(t_env *env)
 {
 	char	*line;
+	int		ctrl;
 
 	line = NULL;
-	while (get_next_line(env->champion->fd, &line) == TRUE)
+	while ((ctrl = get_next_line2(env->champion->fd, &line)) != 0)
 	{
-		env->line = line;
-		if (fetch_champ(env, line) == FAILURE)
+		if (ctrl == -1)
 			return (FAILURE);
-		if (fetch_actions(env, line) == FAILURE)
-			return (FAILURE);
-		if (env->champion->comment)
-			env->champion_fetched = TRUE;
-		env->nb_line++;
-		free(line);
+		if (line && (env->line = line))
+		{
+			if (fetch_champ(env, line) == FAILURE)
+				return (FAILURE);
+			if (fetch_actions(env, line) == FAILURE)
+				return (FAILURE);
+			if (env->champion->name && env->champion->comment)
+				env->champion_fetched = TRUE;
+			env->nb_line++;
+			free(line);
+		}
 	}
-	if (!env->champion->name)
-		ft_error(env, "A champion has no name");
-	if (!env->champion->comment)
-		ft_error(env, "A champion has no description");
-	if (!env->action)
-		ft_error(env, "Your champion is just idle simulator");
+	if (!env->champion_fetched)
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -97,7 +98,7 @@ static int			processing(t_env *env, char *file)
 		ft_error(env, "Parsing failed");
 	if (close(champ->fd) == -1)
 		ft_error(env, "Error on closing champion file");
-	if ((champ->fd = open(ft_strdup(env->file_name), O_CREAT |
+	if ((champ->fd = open(env->file_name, O_CREAT |
 		O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR)) == -1)
 		ft_error(env, "Error on creating the .cor file");
 	process_calcul(env);
@@ -111,12 +112,11 @@ static int			processing(t_env *env, char *file)
 int					main(int ac, char **av)
 {
 	t_env		*env;
-	char		*name;
 
-	if (ac != 2 || illgal_file(av[1]))
-		ft_error(env, "usage: ./asm champion.s\n");
 	if (!(env = init_env()))
 		ft_putstr("Error on malloc\n");
+	if (ac != 2 || illgal_file(av[1]))
+		ft_error(env, "usage: ./asm champion.s\n");
 	if (env)
 	{
 		env->file_name = ft_strjoinf_l(file_name(av[1]), ".cor");
@@ -127,5 +127,6 @@ int					main(int ac, char **av)
 		ft_putstr_fd(env->file_name, 2);
 		ft_putstr_fd("\n\033[0m", 2);
 	}
+	tafreetatoucompris(env);
 	return (0);
 }

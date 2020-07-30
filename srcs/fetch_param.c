@@ -53,7 +53,7 @@ int				fill_reg(char *line, t_param *param, int j)
 	return (SUCCESS);
 }
 
-static int		fill_param(char *line, t_op *op, int j, int i)
+static void		fill_param(char *line, t_op *op, int j, int i)
 {
 	t_param		*param;
 	int			ret;
@@ -112,15 +112,8 @@ int				fetch_param(t_env *env, char *line, t_op *op, int op_type)
 			separator++;
 		i++;
 	}
-	if ((separator + 1) != op->nb_arg)
-	{
-		printf("nb arg = %d\n", op->nb_arg);
-		printf("last seen = separator\n");
-		return (FAILURE);
-	}
 	if (make_param(env, op, g_op_tab[op_type].nb_arg, op_type) == FAILURE)
 		ft_error(env, "Error on malloc");
-	if (fill_param(line, op, -1, 0) == FAILURE)
-		ft_error(env, "Error on parameters fetch");
+	fill_param(line, op, -1, 0);
 	return (SUCCESS);
 }

@@ -1,7 +1,9 @@
 #include "asm.h"
 
-static void		calcul_process(t_param *param, t_op *op, int add)
+static void		calcul_process(t_param *param, t_op *op)
 {
+	int		add;
+
 	if (param->arg_type == T_REG)
 		add = REG_CODE;
 	if (param->arg_type == T_DIR || param->arg_type == T_LAB)
@@ -15,7 +17,6 @@ static void		calcul_process(t_param *param, t_op *op, int add)
 static int		ocp_calcul(t_op *op)
 {
 	t_param		*param;
-	int			add;
 	int			nb_param;
 
 	param = op->param;
@@ -26,7 +27,7 @@ static int		ocp_calcul(t_op *op)
 		op->ocp = 0;
 	while (param)
 	{
-		calcul_process(param, op, add);
+		calcul_process(param, op);
 		param = param->next;
 		nb_param++;
 	}

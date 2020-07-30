@@ -143,7 +143,7 @@ void					ft_error(t_env *env, char *str);
 /*
 write_tools.c
 */
-int						get_id_label(t_env *env, t_op *op, char *arg);
+int						get_id_label(t_env *env, char *arg);
 int						get_value(t_env *env, t_op *op, int id_label);
 
 /*
@@ -159,5 +159,9 @@ int						line_empty(t_env *env, char *line);
 void					empty_action(t_env *env);
 void					id_op(t_env *env);
 int						illgal_file(char *s);
+void					tafreetatoucompris(t_env *env);
+int						get_next_line2(const int fd, char **line);
+
+int						not_allowed(char *line);
 
 #endif

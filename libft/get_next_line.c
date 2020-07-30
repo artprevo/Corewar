@@ -16,7 +16,7 @@ t_buff	*new_buff(int fd, int add, t_buff **buff)
 {
 	t_buff	*new;
 
-	if (!(new = malloc(sizeof(t_buff))))
+	if (!(new = ft_memalloc(sizeof(t_buff))))
 		return (NULL);
 	new->buff = ft_strnew(BUFF_SIZE);
 	new->mem = -1;
@@ -100,16 +100,11 @@ int		get_next_line(const int fd, char **line)
 {
 	static t_buff	*buff;
 	t_buff			*copy;
-	int				exists;
 
 	if (!line)
 		return (-1);
-	exists = 0;
 	if (!buff)
-	{
 		buff = new_buff(fd, 0, NULL);
-		exists = 1;
-	}
 	copy = buff;
 	if (!check_buff(fd, &copy))
 		copy = new_buff(fd, 1, &buff);

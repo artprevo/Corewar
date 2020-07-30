@@ -82,7 +82,8 @@ SRC = ft_strjoinf.c				\
 	ft_stristr.c				\
 	ft_perror.c					\
 	ft_strjoinf_l.c				\
-	ft_itoabase.c
+	ft_itoabase.c				\
+	gnl_tools.c
 
 OBJS = $(SRC:.c=.o)
 

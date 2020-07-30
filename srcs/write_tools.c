@@ -38,7 +38,7 @@ int			get_value(t_env *env, t_op *op, int id_label)
 	return (value);
 }
 
-int			get_id_label(t_env *env, t_op *op, char *arg)
+int			get_id_label(t_env *env, char *arg)
 {
 	int				id_label;
 	t_action		*current_action;
@@ -55,4 +55,5 @@ int			get_id_label(t_env *env, t_op *op, char *arg)
 		current_action = current_action->next;
 	}
 	ft_error(env, "Error, label not found");
+	return (FAILURE);
 }

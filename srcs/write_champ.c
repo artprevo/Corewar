@@ -25,7 +25,7 @@ static void	write_label(char *prog, t_op *op, t_param *param, int dir)
 
 	arg = param->label;
 	value = 0;
-	id_label = get_id_label(op->param->env, op, arg);
+	id_label = get_id_label(op->param->env, arg);
 	if (id_label != op->id_label)
 	{
 		value = get_value(op->param->env, op, id_label);
@@ -46,13 +46,11 @@ static void	write_label(char *prog, t_op *op, t_param *param, int dir)
 	}
 }
 
-static void	write_args(t_action *action, t_op *op, char *prog, int *i)
+static void	write_args(t_op *op, char *prog, int *i)
 {
 	t_param			*param;
-	int				j;
 	int				dir;
 
-	j = -1;
 	param = op->param;
 	while (param)
 	{
@@ -90,7 +88,7 @@ void		write_champ(t_env *env, int i, t_action *action)
 				prog[i++] = op->opcode;
 				if (op->ocp)
 					prog[i++] = op->ocp;
-				write_args(action, op, prog, &i);
+				write_args(op, prog, &i);
 			}
 			op = op->next;
 		}

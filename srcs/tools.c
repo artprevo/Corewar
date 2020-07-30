@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 17:29:39 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/13 17:39:37 by artprevo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "asm.h"
 
 char	*file_name(char *str)
@@ -30,7 +18,7 @@ char	*file_name(char *str)
 	if (k != 0)
 		k++;
 	k = 0;
-	file_name = malloc(sizeof(char) * ((i - k) + 1));
+	file_name = malloc(sizeof(char) * ((i - k)));
 	i = i - k;
 	while (j < i)
 		file_name[j++] = str[k++];

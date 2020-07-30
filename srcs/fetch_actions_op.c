@@ -96,6 +96,10 @@ int				fetch_actions(t_env *env, char *line)
 {
 	if (env->champion_fetched == TRUE)
 	{
+		if (not_allowed(line) == TRUE)
+			ft_error(env, "Wrong syntax");
+		if (line[0] == '.')
+			ft_error(env, "Wrong syntax");
 		if (line_empty(env, line) == TRUE)
 			env->token = NEW_ACTION;
 		if (fetch_label(env, line) == FAILURE)
