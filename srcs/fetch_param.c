@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fetch_param.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/31 15:12:23 by artprevo          #+#    #+#             */
+/*   Updated: 2020/07/31 18:21:48 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 int				label_name(char *line, t_param *param, int i)
@@ -112,6 +124,8 @@ int				fetch_param(t_env *env, char *line, t_op *op, int op_type)
 			separator++;
 		i++;
 	}
+	if (separator + 1 != g_op_tab[op_type].nb_arg)
+		ft_error(env, "Not the right numbers of arg for this op");
 	if (make_param(env, op, g_op_tab[op_type].nb_arg, op_type) == FAILURE)
 		ft_error(env, "Error on malloc");
 	fill_param(line, op, -1, 0);

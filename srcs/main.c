@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 17:29:39 by artprevo          #+#    #+#             */
-/*   Updated: 2020/01/13 17:39:37 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/07/31 18:17:17 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void			process_calcul(t_env *env)
 		while (action->prev)
 			action = action->prev;
 		env->action = action;
+		good_args(env, 0);
 		process_ocp(env);
 		weight_and_size(env);
 		empty_action(env);
@@ -65,7 +66,7 @@ static int			processparsing(t_env *env)
 	int		ctrl;
 
 	line = NULL;
-	while ((ctrl = get_next_line2(env->champion->fd, &line)) != 0)
+	while ((ctrl = get_next_line2(env->champion->fd, &line, 0)) != 0)
 	{
 		if (ctrl == -1)
 			return (FAILURE);
@@ -81,8 +82,8 @@ static int			processparsing(t_env *env)
 			free(line);
 		}
 	}
-	if (!env->champion_fetched)
-		return (FAILURE);
+	if (env->champion_fetched == FALSE)
+		no_champion(env);
 	return (SUCCESS);
 }
 
@@ -112,21 +113,28 @@ static int			processing(t_env *env, char *file)
 int					main(int ac, char **av)
 {
 	t_env		*env;
+	int			i;
 
-	if (!(env = init_env()))
-		ft_putstr("Error on malloc\n");
-	if (ac != 2 || illgal_file(av[1]))
-		ft_error(env, "usage: ./asm champion.s\n");
-	if (env)
+	if (ac <= 1)
+		ft_error2("usage: ./asm champion1.s champion2.s ...\n");
+	i = 1;
+	while (av[i])
 	{
-		env->file_name = ft_strjoinf_l(file_name(av[1]), ".cor");
-		if (processing(env, av[1]) == FAILURE)
-			ft_error(env, "Ui ca c mal passe.");
-		ft_putstr_fd("\033[32m", 2);
-		ft_putstr_fd("Writing output program to ", 2);
-		ft_putstr_fd(env->file_name, 2);
-		ft_putstr_fd("\n\033[0m", 2);
+		if (!illgal_file(av[i]))
+		{
+			if (!(env = init_env()))
+				ft_putstr_fd("Error on initial malloc\n", 2);
+			if (env)
+			{
+				env->file_name = ft_strjoinf_l(file_name(av[i]), ".cor");
+				processing(env, av[i]);
+				writing_output(env->file_name);
+				tafreetatoucompris(env);
+			}
+		}
+		else
+			ft_error3(av[i]);
+		i++;
 	}
-	tafreetatoucompris(env);
 	return (0);
 }

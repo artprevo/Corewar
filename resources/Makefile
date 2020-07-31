@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+         #
+#    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 18:16:55 by artprevo          #+#    #+#              #
-#    Updated: 2020/07/31 18:24:54 by artprevo         ###   ########.fr        #
+#    Updated: 2020/01/13 17:41:52 by artprevo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = asm
 CC = gcc
 CFLAGS = -fsanitize=address -Wall -Wextra -Werror
-SRCS = main.c \
+SRCS = main.c print.c \
 fetch_label.c fetch_champ.c fetch_actions_op.c fetch_param.c fetch_param_tools.c \
 struct_add.c struct_init.c ft_error.c weight_and_size.c gnl_reworked.c tools2.c \
 process_ocp.c write_header.c write_champ.c write_tools.c tools.c freeall.c \

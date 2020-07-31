@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/31 15:12:34 by artprevo          #+#    #+#             */
+/*   Updated: 2020/07/31 18:24:32 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 void	ft_error(t_env *env, char *str)
@@ -20,7 +32,41 @@ void	ft_error(t_env *env, char *str)
 			ft_putstr_fd("\n", 2);
 		}
 		ft_putstr_fd("\033[0m", 2);
-		// tafreetatoucompris(env);
 	}
 	exit(0);
+}
+
+void	ft_error2(char *str)
+{
+	ft_putstr_fd("\033[33m", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\033[0m", 2);
+}
+
+void	ft_error3(char *str)
+{
+	ft_putstr_fd("\033[33m", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(" is not a valid file\n", 2);
+	ft_putstr_fd("\033[0m", 2);
+}
+
+void	ft_error4(int nb_arg, char *op)
+{
+	ft_putstr_fd("\033[33m", 2);
+	ft_putstr_fd("The parameter n°", 2);
+	ft_putnbr_fd(nb_arg, 2);
+	ft_putstr_fd(" is invalid for instruction ", 2);
+	ft_putstr_fd(op, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("\033[0m", 2);
+	exit(0);
+}
+
+void	writing_output(char *str)
+{
+	ft_putstr_fd("\033[32m", 2);
+	ft_putstr_fd("Writing output program to ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n\033[0m", 2);
 }

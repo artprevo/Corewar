@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: artprevo <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 00:20:03 by artprevo          #+#    #+#              #
-#    Updated: 2019/10/26 16:44:11 by artprevo         ###   ########.fr        #
+#    Updated: 2020/07/31 15:55:52 by artprevo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,8 +82,7 @@ SRC = ft_strjoinf.c				\
 	ft_stristr.c				\
 	ft_perror.c					\
 	ft_strjoinf_l.c				\
-	ft_itoabase.c				\
-	gnl_tools.c
+	ft_itoabase.c
 
 OBJS = $(SRC:.c=.o)
 

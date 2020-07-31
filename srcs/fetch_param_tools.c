@@ -1,19 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fetch_param_tools.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/31 15:12:26 by artprevo          #+#    #+#             */
+/*   Updated: 2020/07/31 18:22:04 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
-static void		fetch_indirect_param(t_param *param, int *i, char *line, int j)
+static void		fetch_indirect_param(t_param *param, char *line, int j)
 {
 	param->arg_type = T_IND;
-	if (!(param->arg_type & g_op_tab[param->op_type].args[*i]))
-		ft_error(param->env, "Error, wrong argument for this op");
 	if (label_name(line, param, j + 1) == FAILURE)
 		ft_error(param->env, "Error on label name extraction");
 }
 
-static void		fetch_error(t_param *param, int *i, int j, char *line)
+static void		fetch_error(t_param *param, int j, char *line)
 {
 	param->arg_type = T_IND;
-	if (!(param->arg_type & g_op_tab[param->op_type].args[*i]))
-		ft_error(param->env, "Error, wrong argument for this op");
 	if (fill_reg(line, param, j + 1) == FAILURE)
 		ft_error(param->env, "Error on register malloc");
 }
@@ -41,7 +49,7 @@ int				fetch_indirect(char *line, t_param *param, int j, int *i)
 		return (SUCCESS);
 	if (line[j] == LABEL_CHAR && line[j - 1] != DIRECT_CHAR)
 	{
-		fetch_indirect_param(param, i, line, j);
+		fetch_indirect_param(param, line, j);
 		*i += 1;
 		return (TRUE);
 	}
@@ -56,7 +64,7 @@ int				fetch_indirect(char *line, t_param *param, int j, int *i)
 		}
 		if (ft_isdigit(line[j]) == 1)
 			j--;
-		fetch_error(param, i, j, line);
+		fetch_error(param, j, line);
 		*i += 1;
 		return (TRUE);
 	}

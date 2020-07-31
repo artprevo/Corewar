@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 14:14:30 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/18 21:00:54 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/07/31 15:55:57 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,5 @@ int					ft_recursive_power(int nb, int power);
 int					ft_sqrt(int nb);
 char				*ft_strjoinf_l(char *s1, char *s2);
 char				*ft_itoa_base(int value, int base);
-void				free_buff(t_buff *buff);
 
 #endif

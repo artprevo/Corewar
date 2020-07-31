@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   freeall.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/31 15:12:30 by artprevo          #+#    #+#             */
+/*   Updated: 2020/07/31 15:12:30 by artprevo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 static void		free_op(t_op *op)
@@ -53,7 +65,9 @@ void			tafreetatoucompris(t_env *env)
 		free(env->champion);
 	}
 	if (env->action)
+	{
 		free_action(env);
+	}
 	if (env->file_name)
 		free(env->file_name);
 	free(env);

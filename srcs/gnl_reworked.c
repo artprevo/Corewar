@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   gnl_reworked.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weilin <weilin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 19:27:10 by weilin            #+#    #+#             */
-/*   Updated: 2020/07/30 18:40:48 by weilin           ###   ########.fr       */
+/*   Updated: 2020/07/31 15:30:32 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "asm.h"
+#include "asm.h"
 
 static char	*ft_strreset(char *s1, char *s2)
 {
@@ -55,13 +55,11 @@ static int	ft_return_line(char **s, char **line, const int fd, int rd)
 	return (0);
 }
 
-int			get_next_line2(const int fd, char **line)
+int			get_next_line2(const int fd, char **line, int rd)
 {
 	static char	*s[256];
-	int			rd;
 	char		*buff;
 
-	rd = 0;
 	if (fd < 0 || !line || read(fd, NULL, 0) < 0 || BUFF_SIZE < 1 ||
 		!(buff = ft_strnew(BUFF_SIZE)))
 		return (-1);

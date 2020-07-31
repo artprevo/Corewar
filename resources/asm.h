@@ -6,7 +6,7 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 15:26:11 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 18:22:12 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/07/31 15:26:44 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,14 @@ void					add_action(t_env *env, t_action *action);
 void					add_op(t_action *action, t_op *op);
 void					add_param(t_op *op, t_param *param);
 
+void					print_action(t_env *env);
+void					print_op(t_env *env);
+
 void					write_header(t_env *env);
 
 void					write_champ(t_env *env, int i, t_action *action);
 
 void					ft_error(t_env *env, char *str);
-void					ft_error2(char *str);
-void					ft_error3(char *str);
-void					ft_error4(int nb_arg, char *op);
-void					writing_output(char *str);
 
 int						get_id_label(t_env *env, char *arg);
 int						get_value(t_env *env, t_op *op, int id_label);
@@ -123,10 +122,8 @@ void					empty_action(t_env *env);
 void					id_op(t_env *env);
 int						illgal_file(char *s);
 void					tafreetatoucompris(t_env *env);
-int						get_next_line2(const int fd, char **line, int rd);
+int						get_next_line2(const int fd, char **line);
 
 int						not_allowed(char *line);
-void					no_champion(t_env *env);
-void					good_args(t_env *env, int i);
 
 #endif

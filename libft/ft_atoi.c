@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artprevo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 16:19:45 by artprevo          #+#    #+#             */
-/*   Updated: 2019/09/21 17:35:25 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/07/31 15:35:21 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-#define S str[i]
 
 int	ft_atoi(const char *str)
 {
@@ -23,18 +21,19 @@ int	ft_atoi(const char *str)
 	i = 0;
 	result = 0;
 	neg = 1;
-	while (S && (S == '\t' || S == '\n' || S == '\r' || S == '\v' || S == '\f'
-		|| S == ' '))
+	while (str[i] && (str[i] == '\t' || str[i] == '\n' || str[i] == '\r' ||
+	str[i] == '\v' || str[i] == '\f'
+		|| str[i] == ' '))
 		i++;
-	if (S == '+' || S == '-')
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (S == '-')
+		if (str[i] == '-')
 			neg = -1;
 		i++;
 	}
-	while (ft_isdigit(S) == 1)
+	while (ft_isdigit(str[i]) == 1)
 	{
-		result = result * 10 + (S - 48);
+		result = result * 10 + (str[i] - 48);
 		i++;
 	}
 	return (result * neg);
