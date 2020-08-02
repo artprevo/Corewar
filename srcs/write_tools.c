@@ -6,7 +6,7 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 15:13:24 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 15:13:25 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:03:01 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ int			get_id_label(t_env *env, char *arg)
 		}
 		current_action = current_action->next;
 	}
-	ft_error(env, "Error, label not found");
+	ft_error2("Error, label not found\n");
 	return (FAILURE);
 }

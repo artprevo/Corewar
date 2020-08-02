@@ -6,7 +6,7 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 15:26:11 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 18:22:12 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/08/02 16:44:23 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void					ft_error(t_env *env, char *str);
 void					ft_error2(char *str);
 void					ft_error3(char *str);
 void					ft_error4(int nb_arg, char *op);
+void					ft_error5(char *str);
 void					writing_output(char *str);
 
 int						get_id_label(t_env *env, char *arg);
@@ -128,5 +129,6 @@ int						get_next_line2(const int fd, char **line, int rd);
 int						not_allowed(char *line);
 void					no_champion(t_env *env);
 void					good_args(t_env *env, int i);
+int						full_empty(char *line, int ret, int isok, int isnotok);
 
 #endif

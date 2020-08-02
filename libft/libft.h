@@ -6,13 +6,14 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 14:14:30 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 15:55:57 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:41:01 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <limits.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>

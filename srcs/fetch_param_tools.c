@@ -6,7 +6,7 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 15:12:26 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 18:22:04 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:22:53 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		fetch_error(t_param *param, int j, char *line)
 {
 	param->arg_type = T_IND;
 	if (fill_reg(line, param, j + 1) == FAILURE)
-		ft_error(param->env, "Error on register malloc");
+		ft_error(param->env, "Wrong syntax");
 }
 
 int				fetch_directchar(char *line, t_param *param, int j)
@@ -38,7 +38,7 @@ int				fetch_directchar(char *line, t_param *param, int j)
 	{
 		param->arg_type = T_DIR;
 		if (fill_reg(line, param, j) == FAILURE)
-			ft_error(param->env, "Error on register malloc");
+			ft_error(param->env, "Wrong syntax");
 	}
 	return (SUCCESS);
 }
@@ -76,5 +76,5 @@ void			param_reg(t_param *param, int i, int j, char *line)
 	param->arg_type = T_REG;
 	if (!(param->arg_type & g_op_tab[param->op_type].args[i]) ||
 	fill_reg(line, param, j) == FAILURE)
-		ft_error(param->env, "Error on register malloc");
+		ft_error(param->env, "Wrong syntax");
 }

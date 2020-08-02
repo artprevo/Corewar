@@ -6,7 +6,7 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 15:12:23 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 18:21:48 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/08/02 16:45:23 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,14 @@ int				fill_reg(char *line, t_param *param, int j)
 
 	i = 0;
 	len = 0;
-	while (line[j] && line[j] != SEPARATOR_CHAR)
-	{
+	if (j > (int)ft_strlen(line))
+		ft_error(param->env, "Wrong syntax");
+	while (line[j] && line[j] != SEPARATOR_CHAR && j++)
 		len++;
-		j++;
-	}
 	if (param->arg_type == T_IND)
 		len++;
 	if (!(tmp = ft_strnew(len)))
-		return (FAILURE);
+		ft_error(param->env, "Error on register malloc");
 	j = j - len + 1;
 	if (param->arg_type == T_IND && line[j - 1] == '-')
 		j--;

@@ -6,7 +6,7 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 17:29:39 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 18:17:17 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:06:21 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static int			processparsing(t_env *env)
 			if (env->champion->name && env->champion->comment)
 				env->champion_fetched = TRUE;
 			env->nb_line++;
+			if (full_empty(line, 0, 0, 0) == TRUE)
+				ft_error(env, "Wrong syntax");
 			free(line);
 		}
 	}
@@ -122,8 +124,7 @@ int					main(int ac, char **av)
 	{
 		if (!illgal_file(av[i]))
 		{
-			if (!(env = init_env()))
-				ft_putstr_fd("Error on initial malloc\n", 2);
+			env = init_env();
 			if (env)
 			{
 				env->file_name = ft_strjoinf_l(file_name(av[i]), ".cor");

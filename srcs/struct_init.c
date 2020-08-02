@@ -6,7 +6,7 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 15:13:03 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 15:13:03 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/08/02 12:57:26 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env		*init_env(void)
 	t_env *env;
 
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
-		return (NULL);
+		ft_error2("Error on initial malloc\n");
 	env->champion = NULL;
 	env->action = NULL;
 	env->champion_fetched = FALSE;
@@ -34,7 +34,7 @@ t_champion	*init_champion(t_env *env)
 	t_champion *champion;
 
 	if (!(champion = (t_champion *)malloc(sizeof(t_champion))))
-		return (NULL);
+		ft_error(env, "Error on champion malloc");
 	champion->env = env;
 	champion->fd = 0;
 	champion->name = NULL;
@@ -47,7 +47,7 @@ t_action	*init_action(t_env *env)
 	t_action	*action;
 
 	if (!(action = (t_action *)malloc(sizeof(t_action))))
-		return (NULL);
+		ft_error(env, "Error on action malloc");
 	action->env = env;
 	action->name = NULL;
 	action->next = NULL;
@@ -62,7 +62,7 @@ t_op		*init_op(void)
 	t_op	*op;
 
 	if (!(op = (t_op *)malloc(sizeof(t_op))))
-		return (NULL);
+		ft_error2("Error on op malloc\n");
 	op->op = NULL;
 	op->nb_arg = 0;
 	op->opcode = 0;
@@ -83,7 +83,7 @@ t_param		*init_param(int op_type, t_env *env)
 	t_param		*param;
 
 	if (!(param = (t_param *)malloc(sizeof(t_param))))
-		return (NULL);
+		ft_error(env, "Error on param malloc");
 	param->env = env;
 	param->label = NULL;
 	param->arg_type = 0;

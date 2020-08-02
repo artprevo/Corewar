@@ -6,7 +6,7 @@
 /*   By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/31 15:13:06 by artprevo          #+#    #+#             */
-/*   Updated: 2020/07/31 15:13:06 by artprevo         ###   ########.fr       */
+/*   Updated: 2020/08/02 12:51:22 by artprevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ char	*file_name(char *str)
 	if (k != 0)
 		k++;
 	k = 0;
-	file_name = malloc(sizeof(char) * ((i - k)));
+	if (!(file_name = malloc(sizeof(char) * ((i - k) + 1))))
+		ft_error2("Error on malloc for file_name\n");
 	i = i - k;
 	while (j < i)
 		file_name[j++] = str[k++];
+	file_name[j] = '\0';
 	return (file_name);
 }
 

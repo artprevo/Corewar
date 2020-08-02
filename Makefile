@@ -6,14 +6,14 @@
 #    By: artprevo <artprevo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 18:16:55 by artprevo          #+#    #+#              #
-#    Updated: 2020/07/31 18:24:54 by artprevo         ###   ########.fr        #
+#    Updated: 2020/08/02 14:41:33 by artprevo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = asm
 CC = gcc
 CFLAGS = -fsanitize=address -Wall -Wextra -Werror
-SRCS = main.c \
+SRCS = main.c tools3.c \
 fetch_label.c fetch_champ.c fetch_actions_op.c fetch_param.c fetch_param_tools.c \
 struct_add.c struct_init.c ft_error.c weight_and_size.c gnl_reworked.c tools2.c \
 process_ocp.c write_header.c write_champ.c write_tools.c tools.c freeall.c \
@@ -22,7 +22,7 @@ OBJS_PATH = objs/
 SRCS_PATH = srcs/
 OBJS = $(patsubst %.c, $(OBJS_PATH)%.o, $(SRCS))
 LIBFT = libft/libft.a
-HEADER = ./includes/asm.h ./libft/libft.h
+HEADER = ./includes/asm.h ./libft/libft.h ./includes/op.h
 INCLUDES = -I ./includes/ -I ./libft/
 
 all: $(LIBFT) $(OBJS_PATH) $(NAME)
